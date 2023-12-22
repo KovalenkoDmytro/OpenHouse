@@ -1,0 +1,25 @@
+.page_title{
+  padding: 20px 0 20px 32px;
+  border-bottom: 1px solid $border_color;
+  color: $white_color;
+  position: relative;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin: 0;
+  @include tablet {
+    font-size: 25px;
+    margin-bottom: 25px;
+  }
+  &:before{
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: $primary_color;
+    left: 0;
+    top: 0;
+    z-index: -1;
+  }
+}

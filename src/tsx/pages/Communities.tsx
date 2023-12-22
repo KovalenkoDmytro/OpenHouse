@@ -1,5 +1,7 @@
 import {useEffect, useState} from "react";
 import CommunityItem from "../components/CommunityItem";
+import {groupBy} from "../helpers";
+import MainLayout from "../../scss/layouts/MainLayout";
 
 
 interface CommunitiesItem {
@@ -45,7 +47,8 @@ export default function Communities() {
         toGetCommunities()
             .then((responseJson) => {
                 const sortedData = toSortCommunities(responseJson)
-                setCommunities(sortedData)
+                const groupedData = groupBy(sortedData,'group')
+                setCommunities(groupedData)
             })
             .catch((error) => {
                 console.log(error)
@@ -67,11 +70,28 @@ export default function Communities() {
     }
 
     return (
-        <div className={'communitiesPage'}>
-            {communities.map(({...item}: any, index) => {
-                const homes = toGetCommunityHouses(item.id)
-                return <CommunityItem {...item} key={index} homes={homes}/>
-            })}
-        </div>
+        <MainLayout pageTitle={'Communities'}>
+
+            <div className={'communitiesPage'}>
+                {Object.entries(communities).map(({...item}: any, index) => {
+                    return (
+                        <div className={'community'} key={index}>
+                            <div className={'communityName'}>
+                                <span className={'title'}>{item[0]}</span>
+                                <span className={'line'}></span>
+                            </div>
+                            <div className={'communityItems'}>
+                                {item[1].map(({...item}: any, index: any) => {
+                                    const homes = toGetCommunityHouses(item.id)
+                                    return <CommunityItem {...item} key={index} homes={homes}/>
+                                })}
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+        </MainLayout>
+
+
     )
 }
