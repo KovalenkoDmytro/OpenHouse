@@ -6,7 +6,7 @@ export interface Props {
 export default function MainLayout(props: PropsWithChildren<Props>) {
     return(
         <>
-            {props.pageTitle.length && <h1 className={'page_title'}>Communities</h1>}
+            {props.pageTitle.length && <h1 className={'page_title'}>{props.pageTitle}</h1>}
             <main className="content_wrapper">
                 {props.children}
             </main>

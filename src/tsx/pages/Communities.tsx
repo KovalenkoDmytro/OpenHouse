@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import CommunityItem from "../components/CommunityItem";
 import {groupBy} from "../helpers";
-import MainLayout from "../../scss/layouts/MainLayout";
+import MainLayout from "../layouts/MainLayout";
+
 
 
 interface CommunitiesItem {
@@ -63,14 +64,11 @@ export default function Communities() {
             });
     }, []);
 
-    const toGetCommunityHouses = (communityId: string): object[] => {
-        return homes.filter(({...item}: any) => {
-            return item.communityId.toLowerCase() === communityId.toLowerCase()
-        })
-    }
+
 
     return (
         <MainLayout pageTitle={'Communities'}>
+
             <div className={'communitiesPage'}>
                 {Object.entries(communities).map(({...item}: any, index) => {
                     return (
@@ -81,7 +79,6 @@ export default function Communities() {
                             </div>
                             <div className={'communityItems'}>
                                 {item[1].map(({...item}: any, index: any) => {
-                                    const homes = toGetCommunityHouses(item.id)
                                     return <CommunityItem {...item} key={index} homes={homes}/>
                                 })}
                             </div>

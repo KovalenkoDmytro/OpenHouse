@@ -39,6 +39,8 @@
         height: 180px;
         object-fit: cover;
         width: 100%;
+        font-size: 0;
+
         @include laptop{
           @include transition()
         }
@@ -48,6 +50,7 @@
 
       }
       &__link{
+        border: 1px solid $border_color;
         &:hover{
           .communityItem__picture{
             transform: scale(1.05);

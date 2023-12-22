@@ -10,7 +10,8 @@ export default function RoutesList() {
         <Routes>
             <Route path="*" element={<NotFound/>}/>
             <Route path="/" element={<Communities/>}/>
-            <Route path="/homes" element={<Homes/>}/>
+            <Route path="/communities" element={<Communities/>}/>
+            <Route path="/communities/:id" element={<Homes/>}/>
             <Route path="/home/:id" element={<Home/>}/>
         </Routes>
     )

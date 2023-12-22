@@ -1,0 +1,72 @@
+.homeItems {
+  display: grid;
+
+  @include laptop {
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 25px;
+  }
+
+  .home {
+    overflow: hidden;
+
+    &__picture {
+      height: 180px;
+      object-fit: cover;
+      width: 100%;
+      font-size: 0;
+
+      @include laptop {
+        @include transition()
+      }
+      @include desktop {
+        height: 230px;
+      }
+
+    }
+
+    &__link {
+      border: 1px solid $border_color;
+
+      &:hover {
+        .communityItem__picture {
+          transform: scale(1.05);
+        }
+      }
+    }
+
+    &__description {
+      padding: 20px 16px;
+
+      .communityItem__title {
+        background: linear-gradient(to right, rgb(255, 255, 255), rgb(255, 255, 255)), linear-gradient(to right, rgb(17, 17, 17), rgb(0, 0, 0), rgb(0, 0, 0));
+        background-size: 100% 1px, 0 1px;
+        background-position: 100% 100%, 0 100%;
+        background-repeat: no-repeat;
+        width: max-content;
+        margin-bottom: 5px;
+        font-weight: 600;
+        font-size: 22px;
+        @include transition();
+      }
+    }
+
+    &__parameter {
+      color: $gray_color;
+    }
+
+    &:hover {
+      .communityItem__title {
+        background-size: 0 1px, 100% 1px;
+      }
+
+    }
+  }
+}
+
+.homeItem + .homeItem {
+  margin-top: 20px;
+  @include laptop {
+    margin-top: 0;
+  }
+}
+
