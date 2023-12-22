@@ -71,7 +71,6 @@ export default function Communities() {
 
     return (
         <MainLayout pageTitle={'Communities'}>
-
             <div className={'communitiesPage'}>
                 {Object.entries(communities).map(({...item}: any, index) => {
                     return (
