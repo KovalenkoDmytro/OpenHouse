@@ -7,6 +7,16 @@ const groupBy = function (array: object[], key: string) : object[] {
     }, {});
 };
 
+const toSortObjectKeys = function(object : any): object{
+    let sortedObject= {}
+    Object.keys(object)
+        .sort()
+        .forEach(function(v:any) {
+            sortedObject = {...sortedObject , [v] : object[v]}
+        });
+    return sortedObject
+}
+
 export default function toShowNotification (flash: { type: any; message: any; } ,settings?: object): void {
     Swal.fire({
         toast: true,
@@ -25,4 +35,4 @@ export default function toShowNotification (flash: { type: any; message: any; } 
 }
 
 
-export {groupBy}
+export {groupBy, toSortObjectKeys}

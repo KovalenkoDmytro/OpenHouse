@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import CommunityItem from "../components/CommunityItem";
-import toShowNotification, {groupBy} from "../helpers";
+import toShowNotification, {groupBy, toSortObjectKeys} from "../helpers";
 import MainLayout from "../layouts/MainLayout";
 
 interface CommunitiesItem {
@@ -14,19 +14,13 @@ interface CommunitiesItems extends Array<CommunitiesItem> {
 }
 
 export default function Communities() {
-    const [communities, setCommunities] = useState([] as Array<object>);
+    const [communities, setCommunities] = useState([] as object);
     const [homes, setHomes] = useState([] as Array<object>);
     const htmlRef = useRef<HTMLHtmlElement | null>(null);
     const toSortCommunities = (communities: CommunitiesItems): object[] => {
-        return communities.sort((a, b) => {
-            if (a.group.toUpperCase() < b.group.toUpperCase()) {
-                return -1;
-            }
-            if (a.group.toUpperCase() > b.group.toUpperCase()) {
-                return 1;
-            }
-            return 0;
-        })
+        return communities.sort(function (a: any, b: any) {
+            return a.name.localeCompare(b.name);
+        });
     }
     const toGetCommunities = async () => {
         const response = await fetch('https://storage.googleapis.com/openhouse-ai-fe-coding-test/communities.json');
@@ -43,6 +37,7 @@ export default function Communities() {
         throw new Error('Something went wrong');
     }
 
+
     useEffect(() => {
         htmlRef.current = document.querySelector('html')
         htmlRef.current?.classList.add('__loading');
@@ -51,7 +46,9 @@ export default function Communities() {
             .then((responseJson) => {
                 const sortedData = toSortCommunities(responseJson)
                 const groupedData = groupBy(sortedData,'group')
-                setCommunities(groupedData)
+                const groupedCommunities = toSortObjectKeys(groupedData)
+
+                setCommunities(groupedCommunities)
                 htmlRef.current?.classList.remove('__loading');
             })
             .catch((error) => {
