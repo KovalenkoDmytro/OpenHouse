@@ -1,9 +1,7 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import CommunityItem from "../components/CommunityItem";
 import {groupBy} from "../helpers";
 import MainLayout from "../layouts/MainLayout";
-
-
 
 interface CommunitiesItem {
     id: string,
@@ -18,6 +16,7 @@ interface CommunitiesItems extends Array<CommunitiesItem> {
 export default function Communities() {
     const [communities, setCommunities] = useState([] as Array<object>);
     const [homes, setHomes] = useState([] as Array<object>);
+    const htmlRef = useRef<HTMLHtmlElement | null>(null);
     const toSortCommunities = (communities: CommunitiesItems): object[] => {
         return communities.sort((a, b) => {
             if (a.group.toUpperCase() < b.group.toUpperCase()) {
@@ -45,11 +44,17 @@ export default function Communities() {
     }
 
     useEffect(() => {
+
+        htmlRef.current = document.querySelector('html')
+        htmlRef.current?.classList.add('__loading');
+
+
         toGetCommunities()
             .then((responseJson) => {
                 const sortedData = toSortCommunities(responseJson)
                 const groupedData = groupBy(sortedData,'group')
                 setCommunities(groupedData)
+                htmlRef.current?.classList.remove('__loading');
             })
             .catch((error) => {
                 console.log(error)

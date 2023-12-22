@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useLocation, useParams} from "react-router-dom";
 import HomeItem from "../components/HomeItem";
 import PrevPageBtn from "../components/PrevPageBtn";
@@ -8,6 +8,7 @@ export default function Homes() {
     const [homes, setHomes] = useState([] as Array<object>);
     const {id} = useParams()
     const {state} = useLocation()
+    const htmlRef = useRef<HTMLHtmlElement | null>(null);
     const toGetHomes = async () => {
         const response = await fetch('https://storage.googleapis.com/openhouse-ai-fe-coding-test/homes.json');
         if (response.ok) {
@@ -17,12 +18,15 @@ export default function Homes() {
     }
 
     useEffect(() => {
+        htmlRef.current = document.querySelector('html')
+        htmlRef.current?.classList.add('__loading');
         toGetHomes()
             .then((responseJson) => {
                 const communityHomes = responseJson.filter(({...item}: any) => {
                     return item.communityId === id
                 })
                 setHomes(communityHomes)
+                htmlRef.current?.classList.remove('__loading');
             })
             .catch((error) => {
                 console.log(error)
