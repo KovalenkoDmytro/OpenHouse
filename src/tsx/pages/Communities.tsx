@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import CommunityItem from "../components/CommunityItem";
-import {groupBy} from "../helpers";
+import toShowNotification, {groupBy} from "../helpers";
 import MainLayout from "../layouts/MainLayout";
 
 interface CommunitiesItem {
@@ -44,10 +44,8 @@ export default function Communities() {
     }
 
     useEffect(() => {
-
         htmlRef.current = document.querySelector('html')
         htmlRef.current?.classList.add('__loading');
-
 
         toGetCommunities()
             .then((responseJson) => {
@@ -57,7 +55,7 @@ export default function Communities() {
                 htmlRef.current?.classList.remove('__loading');
             })
             .catch((error) => {
-                console.log(error)
+                toShowNotification({ type: 'error', message: error.message })
             });
 
         toGetHomes()
@@ -65,7 +63,7 @@ export default function Communities() {
                 setHomes(responseJson)
             })
             .catch((error) => {
-                console.log(error)
+                toShowNotification({ type: 'error', message: error.message })
             });
     }, []);
 
@@ -73,7 +71,6 @@ export default function Communities() {
 
     return (
         <MainLayout pageTitle={'Communities'}>
-
             <div className={'communitiesPage'}>
                 {Object.entries(communities).map(({...item}: any, index) => {
                     return (

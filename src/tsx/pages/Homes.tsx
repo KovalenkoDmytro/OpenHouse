@@ -3,6 +3,7 @@ import {useLocation, useParams} from "react-router-dom";
 import HomeItem from "../components/HomeItem";
 import PrevPageBtn from "../components/PrevPageBtn";
 import MainLayout from "../layouts/MainLayout";
+import toShowNotification from "../helpers";
 
 export default function Homes() {
     const [homes, setHomes] = useState([] as Array<object>);
@@ -29,7 +30,7 @@ export default function Homes() {
                 htmlRef.current?.classList.remove('__loading');
             })
             .catch((error) => {
-                console.log(error)
+                toShowNotification({ type: 'error', message: error.message })
             });
     }, []);
 

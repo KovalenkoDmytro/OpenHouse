@@ -8,7 +8,6 @@ export default function NotFound() {
                 <span>
                      Page not found page
                 </span>
-
         </MainLayout>
     )
 }
