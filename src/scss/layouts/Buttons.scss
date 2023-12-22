@@ -31,4 +31,10 @@
   .icon{
     margin-right: 5px;
   }
+  &.__prevPage{
+    margin-bottom: 15px;
+    @include laptop{
+      margin-bottom: 25px;
+    }
+  }
 }

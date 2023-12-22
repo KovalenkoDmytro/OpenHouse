@@ -5,9 +5,8 @@ type Props = {
     id: string, name: string, imgUrl: string, group: string, homes : []
 }
 
-
 export default function CommunityItem(props:Props) {
-    const {id,name,imgUrl,group,homes} = props
+    const {id,name,imgUrl,homes} = props
 
     const toGetCommunityHouses = (communityId: string): object[] => {
         return homes.filter(({...item}: any) => {

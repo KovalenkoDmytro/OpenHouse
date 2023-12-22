@@ -34,9 +34,10 @@ export default function Homes() {
         <MainLayout pageTitle={state !== null ? state : 'community homes'}>
             <PrevPageBtn title={'communities'}/>
             <div className={'homeItems'}>
-                {homes.map(({...item}: any, index) => {
+                {homes.length ? homes.map(({...item}: any, index) => {
                     return <HomeItem {...item} key={index}/>
-                })}
+                }) : <div>There are not homes yet</div>}
+
             </div>
         </MainLayout>
     )

@@ -6,7 +6,7 @@ type Props = {
 export default React.memo(function PrevPageBtn(props: Props) {
     const {title} = props
     return (
-        <button className="btn" onClick={() => {
+        <button className="btn __prevPage" onClick={() => {
             window.history.back()
         }} title={title}>
             <svg className={'icon'} fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
